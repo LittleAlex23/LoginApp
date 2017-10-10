@@ -1,4 +1,8 @@
 body{
     background:#3399ff;
 }
+.error_Input{
+    color:#cc0000;
+}
+a:hover {color:#33ff33;}
 

@@ -5,6 +5,20 @@
             1
         </session-timeout>
     </session-config>
+    
+    <listener>
+        <description>HttpSessionListener</description>
+        <listener-class>LoginServlet.CountUserListener</listener-class>
+    </listener>
+    
+    <servlet>
+        <servlet-name>start</servlet-name>
+        <servlet-class>LoginServlet.Start</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>start</servlet-name>
+        <url-pattern>/start</url-pattern>
+    </servlet-mapping>
     <error-page>
         <error-code>404</error-code>
         <location>/notFound.html</location>

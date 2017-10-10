@@ -10,7 +10,10 @@ import Entity.UserAccount;
 import Entity.Validation;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Enumeration;
+import java.util.HashMap;
 import javax.ejb.EJB;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,6 +32,9 @@ public class AccountServlet extends HttpServlet {
     
     @EJB
     Validation validation;
+    @Override
+    public void init(){
+    } 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -101,6 +107,11 @@ public class AccountServlet extends HttpServlet {
             else{
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
+                
+                ServletContext ctx = getServletContext();
+                session.setAttribute("overAllUserCount", (Integer)ctx.getAttribute("overAllUserCount"));
+                session.setAttribute("currentVisitorCount", (Integer)ctx.getAttribute("currentVisitorCount"));
+                
                 response.sendRedirect("LoginSuccess.jsp");
             }    
         }
@@ -134,27 +145,30 @@ public class AccountServlet extends HttpServlet {
         
         // Edit account
         else if (request.getParameter("edit_account") != null) {
-            boolean isValid = true;
             HttpSession session = request.getSession();
             user = (UserAccount)session.getAttribute("user");
-            if(!user.getPassword().equals(request.getParameter("old_password"))){
-                request.setAttribute("error", "password do not match");
-                isValid = false;
-            }
-            String newPassword = request.getParameter("new_password");
-            if(!newPassword.isEmpty() && !validation.isPassValid(newPassword)){
-                request.setAttribute("invalidPassword", "invalid password");
-                isValid = false;
-            }
-            if(!isValid){
+            
+            // Combine all request parameters into a String array
+            Enumeration<String> paramList = request.getParameterNames();
+            String[] paramValues = new String[4];
+            paramValues[0] = user.getPassword();
+            for(int i = 1 ; i < 4; i++)
+                paramValues[i] = request.getParameter(paramList.nextElement());
+            
+            // Check whether the edited data are valid
+            HashMap<Integer,String> message = validation.getResult(paramValues);
+            if(!message.isEmpty()){
+                request.setAttribute("errorMessage", message);
                 request.getRequestDispatcher("EditAccount.jsp").forward(request, response);
             }
             else{
-                if(!newPassword.isEmpty())
-                    user.setPassword(newPassword);
+                String newPassword = request.getParameter("new_password");
                 String email = request.getParameter("new_email");
-                if(!newPassword.equals(""))
-                    user.setEmail(email);
+                
+                // Empty strings imply no changes
+                if(!newPassword.isEmpty()) user.setPassword(newPassword);
+                if(!email.isEmpty()) user.setEmail(email);
+                
                 manager.update(user);
                 response.sendRedirect("LoginSuccess.jsp");
             }

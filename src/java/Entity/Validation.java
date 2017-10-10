@@ -5,11 +5,22 @@
  */
 package Entity;
 
+import java.util.HashMap;
 import javax.ejb.Stateless;
 
 @Stateless
 public class Validation {
     public Validation(){}
+    public HashMap<Integer,String> getResult(String[] paramList){
+        HashMap<Integer,String> message = new HashMap<>();
+        if(!paramList[0].equals(paramList[1])){
+            message.put(0, "current password invalid");
+            return message;
+        }
+        if(!isPassValid(paramList[2]))
+            message.put(1, "invalid password");
+        return message;
+    }
     public boolean isPassValid(String pass){
         boolean hasSymbol = false;
         boolean hasNumber = false;
@@ -36,6 +47,4 @@ public class Validation {
     public boolean isEmailValid(String email){
         return true;
     }
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
 }

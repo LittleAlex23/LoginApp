@@ -1,3 +1,4 @@
+<%@taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -5,12 +6,15 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
     </head>
-    <link rel="stylesheet" type="text/css" href="css/InlineTag.css">
+    <link rel="stylesheet" type="text/css" href='<c:url value="/css/InlineTag.css" />'>
+    <link rel="stylesheet" type="text/css" href='<c:url value="/css/globalDecor.css" />' />
     <body> 
+        <div class="error_Input" align="center">
         <%
             if(request.getAttribute("invalid") != null)
                 out.println(request.getAttribute("invalid"));
         %>
+        </div>
         <div>
             <form action="AccountServlet" method="POST" align="center">
                 <fieldset id="box">

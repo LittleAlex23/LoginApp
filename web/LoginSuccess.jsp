@@ -25,8 +25,9 @@
             <li><a href = "LogOut"> log out </a> </li>
             <li><a href = "DeleteAccount.html"> delete account </a></li>
             <li> <a href = "EditAccount.jsp"> edit account </a></li>
+            <li> active visitors: <%= session.getAttribute("currentVisitorCount")%> </li>
         </ul>
         <h1>Welcome, <%= user.getName()%></h1>
-        <p>Sorry there's nothing much here.</p>
+        <p> You are visitor #<%= session.getAttribute("overAllUserCount")%>. Sorry there's nothing much here.</p>
     </body>
 </html>

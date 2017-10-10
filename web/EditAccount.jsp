@@ -1,3 +1,5 @@
+<%@taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@page import="java.util.HashMap"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -5,27 +7,34 @@
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="css/InlineTag.css">
-        <link rel="stylesheet" type="text/css" href="css/globalDecor.css">
+        <link rel="stylesheet" type="text/css" href='<c:url value="/css/InlineTag.css" />' />
+        <link rel="stylesheet" type="text/css" href='<c:url value="/css/globalDecor.css" />' />
     </head>
     <body>
         <a href="LoginSuccess.jsp">return to home</a>
         <br>
+        <div class="error_Input">
         <%
             if(session.getAttribute("user") == null){
                 response.sendRedirect("/TestLogin/start");
                 return;
             }
-            String old = (String)request.getAttribute("error");
-            if(old != null)
-                out.println(old);
+            HashMap<Integer,String> messageList = (HashMap<Integer,String>)request.getAttribute("errorMessage");
+            if(messageList != null && !messageList.isEmpty()){
+                String message = null;
+                if((message = messageList.get(0)) != null){
+                    out.println(message);
+                
         %>
         <br>
-        <%
-            String newPass = (String)request.getAttribute("invalidPassword");
-            if(newPass != null)
-                out.println(newPass);
+        <%      }
+                else if((message = messageList.get(1)) != null)
+                    out.println(message);
+            }
+        
+        
         %>
+        </div>
         <form action="AccountServlet" method="POST">
             <fieldset id="box">
                 <legend>Edit account:</legend>
