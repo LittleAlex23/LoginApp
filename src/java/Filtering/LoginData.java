@@ -26,7 +26,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Alexandre
  */
-@WebFilter(filterName = "LoginData", urlPatterns = {"/LoginSuccess.jsp"})
+@WebFilter(filterName = "LoginData", urlPatterns = {"/*"})
 public class LoginData implements Filter {
     
     private static final boolean debug = true;
@@ -66,16 +66,26 @@ public class LoginData implements Filter {
         HttpServletRequest httpReq = (HttpServletRequest) request;
         HttpServletResponse httpRes = (HttpServletResponse) response;
         HttpSession session = httpReq.getSession();
-        UserAccount c = (UserAccount)session.getAttribute("user");
         ServletContext context = config.getServletContext();
-        httpRes.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); 
-        httpRes.setHeader("Pragma", "no-cache"); 
-        if(c != null){
-            context.log(c.getName() + " logged on " + (new java.util.Date()));
+        String loginURI = httpReq.getContextPath() + "/start";
+
+        System.out.println(httpReq.getRequestURI());
+        UserAccount c = (UserAccount)session.getAttribute("user");
+        boolean loggedIn = c != null;
+        boolean loginRequest = httpReq.getRequestURI().equals(loginURI);
+        boolean isCSS =  httpReq.getRequestURI().matches(httpReq.getContextPath() + "/css/.+.css$");
+        boolean isLoggingIn = httpReq.getRequestURI().matches(httpReq.getContextPath() + "/LoginSuccess.jsp$");
+        boolean isController = httpReq.getRequestURI().matches(httpReq.getContextPath() + "/AccountServlet$");
+        boolean isCreatingAccount = httpReq.getRequestURI().matches(httpReq.getContextPath() + "/CreateAccount.jsp");
+        if (loggedIn || loginRequest || isCSS || (isLoggingIn && loggedIn)|| isController || isCreatingAccount){
+          //  context.log(c.getName() + " logged on " + (new java.util.Date()));
+            httpRes.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+            httpRes.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+            httpRes.setDateHeader("Expires", 0);
             chain.doFilter(request, response);
+        } else {
+            httpRes.sendRedirect(loginURI);
         }
-        else
-            httpRes.sendRedirect("/WebApp/start");
     }
 
     /**

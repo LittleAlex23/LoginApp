@@ -31,8 +31,6 @@
                 else if((message = messageList.get(1)) != null)
                     out.println(message);
             }
-        
-        
         %>
         </div>
         <form action="AccountServlet" method="POST">

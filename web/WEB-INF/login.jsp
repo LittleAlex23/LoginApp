@@ -5,9 +5,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link rel="stylesheet" type="text/css" href='<c:url value="/css/InlineTag.css" />'>
+        <link rel="stylesheet" type="text/css" href='<c:url value="/css/globalDecor.css" />' />
     </head>
-    <link rel="stylesheet" type="text/css" href='<c:url value="/css/InlineTag.css" />'>
-    <link rel="stylesheet" type="text/css" href='<c:url value="/css/globalDecor.css" />' />
     <body> 
         <div class="error_Input" align="center">
         <%

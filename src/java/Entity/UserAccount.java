@@ -17,7 +17,10 @@ public class UserAccount implements Serializable {
     private String password;
     @Column
     private String email;
-
+    @Column(name="descr", length = 65535)
+    private String description;
+    @Column
+    private String rank;
     public String getUsername() {
         return username;
     }
@@ -55,5 +58,19 @@ public class UserAccount implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    public String getRank() {
+        return rank;
+    }
+
+    public void setRank(String rank) {
+        this.rank = rank;
+    }
 }

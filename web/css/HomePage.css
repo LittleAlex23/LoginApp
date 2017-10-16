@@ -1,0 +1,18 @@
+#main{
+    background-color:#ccffff; 
+    border-style: ridge;
+    width: 390px;
+}
+#profile{
+    background-color:#ccffff ;
+    border-style: ridge;
+    width: 380px;
+}
+#editLink{
+    text-align:right;
+    color:chartreuse;
+}
+.edit{
+    background: transparent;
+}
+

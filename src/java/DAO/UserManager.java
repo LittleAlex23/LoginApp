@@ -33,7 +33,7 @@ public class UserManager {
         session.flush();
     }
     public void update(UserAccount user){
-    session.beginTransaction();
+        session.beginTransaction();
         session.update(user);
         session.getTransaction().commit();
         session.flush();
