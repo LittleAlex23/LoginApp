@@ -8,7 +8,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
-@NamedQuery(name="check", query="from UserAccount u where u.username = :username")
+@NamedQuery(name="checkAccount", query="from UserAccount u where u.username = :username")
 @Table(name="account")
 public class UserAccount implements Serializable {
     @Id
@@ -64,7 +64,7 @@ public class UserAccount implements Serializable {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description = description.trim();
     }
     public String getRank() {
         return rank;
@@ -72,5 +72,11 @@ public class UserAccount implements Serializable {
 
     public void setRank(String rank) {
         this.rank = rank;
+    }
+    @Override
+    public String toString(){
+        return "Username: "+ username + 
+                "\nRank: " + rank +
+                "\nDescription: " + description;
     }
 }

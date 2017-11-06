@@ -29,36 +29,33 @@ import javax.servlet.http.HttpSession;
 @WebFilter(filterName = "LoginData", urlPatterns = {"/*"})
 public class LoginData implements Filter {
     
-    private static final boolean debug = true;
+    private static final boolean DEBUG = true;
     private FilterConfig config;
     private FilterConfig filterConfig = null;
-    
+    private final String[] excludedFiles = {
+        "/css/.+.css$",
+        "/CreateAccount.jsp",
+        "/AccountServlet$",
+        "/start",
+        "/webapi/account"
+    };
     public LoginData() {
     }    
     
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
-        if (debug) {
+        if (DEBUG) {
             log("LoginData:DoBeforeProcessing");
         }
     }    
     
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
-        if (debug) {
+        if (DEBUG) {
             log("LoginData:DoAfterProcessing");
         }
     }
 
-    /**
-     *
-     * @param request The servlet request we are processing
-     * @param response The servlet response we are creating
-     * @param chain The filter chain we are processing
-     *
-     * @exception IOException if an input/output error occurs
-     * @exception ServletException if a servlet error occurs
-     */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
@@ -67,66 +64,51 @@ public class LoginData implements Filter {
         HttpServletResponse httpRes = (HttpServletResponse) response;
         HttpSession session = httpReq.getSession();
         ServletContext context = config.getServletContext();
-        String loginURI = httpReq.getContextPath() + "/start";
-
-        System.out.println(httpReq.getRequestURI());
         UserAccount c = (UserAccount)session.getAttribute("user");
         boolean loggedIn = c != null;
-        boolean loginRequest = httpReq.getRequestURI().equals(loginURI);
-        boolean isCSS =  httpReq.getRequestURI().matches(httpReq.getContextPath() + "/css/.+.css$");
         boolean isLoggingIn = httpReq.getRequestURI().matches(httpReq.getContextPath() + "/LoginSuccess.jsp$");
-        boolean isController = httpReq.getRequestURI().matches(httpReq.getContextPath() + "/AccountServlet$");
-        boolean isCreatingAccount = httpReq.getRequestURI().matches(httpReq.getContextPath() + "/CreateAccount.jsp");
-        if (loggedIn || loginRequest || isCSS || (isLoggingIn && loggedIn)|| isController || isCreatingAccount){
+        System.out.println(httpReq.getRequestURI());
+        if (loggedIn || isExcluded(httpReq.getRequestURI(), httpReq.getContextPath()) || (isLoggingIn && loggedIn)){
           //  context.log(c.getName() + " logged on " + (new java.util.Date()));
             httpRes.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
             httpRes.setHeader("Pragma", "no-cache"); // HTTP 1.0.
             httpRes.setDateHeader("Expires", 0);
             chain.doFilter(request, response);
         } else {
-            httpRes.sendRedirect(loginURI);
+            httpRes.sendRedirect("/WebApp/start");
         }
     }
+    private boolean isExcluded(String URI, String path){
+        for(String str : excludedFiles)
+            if(URI.matches(path + str))
+                return true;
+        return false;
+    }
 
-    /**
-     * Return the filter configuration object for this filter.
-     */
     public FilterConfig getFilterConfig() {
         return (this.filterConfig);
     }
 
-    /**
-     * Set the filter configuration object for this filter.
-     *
-     * @param filterConfig The filter configuration object
-     */
     public void setFilterConfig(FilterConfig filterConfig) {
         this.filterConfig = filterConfig;
     }
 
-    /**
-     * Destroy method for this filter
-     */
+    @Override
     public void destroy() {        
     }
 
-    /**
-     * Init method for this filter
-     */
+    @Override
     public void init(FilterConfig filterConfig) {        
         System.out.println("Instance created of " + getClass().getName());
         this.config = filterConfig;
     }
 
-    /**
-     * Return a String representation of this object.
-     */
     @Override
     public String toString() {
         if (filterConfig == null) {
             return ("LoginData()");
         }
-        StringBuffer sb = new StringBuffer("LoginData(");
+        StringBuilder sb = new StringBuilder("LoginData(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());
@@ -138,26 +120,25 @@ public class LoginData implements Filter {
         if (stackTrace != null && !stackTrace.equals("")) {
             try {
                 response.setContentType("text/html");
-                PrintStream ps = new PrintStream(response.getOutputStream());
-                PrintWriter pw = new PrintWriter(ps);                
-                pw.print("<html>\n<head>\n<title>Error</title>\n</head>\n<body>\n"); //NOI18N
-
-                // PENDING! Localize this for next official release
-                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");                
-                pw.print(stackTrace);                
-                pw.print("</pre></body>\n</html>"); //NOI18N
-                pw.close();
-                ps.close();
+                try (PrintStream ps = new PrintStream(response.getOutputStream()); 
+                        PrintWriter pw = new PrintWriter(ps)) {
+                    pw.print("<html>\n<head>\n<title>Error</title>\n</head>\n<body>\n"); //NOI18N
+                    
+                    // PENDING! Localize this for next official release
+                    pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");
+                    pw.print(stackTrace);
+                    pw.print("</pre></body>\n</html>"); //NOI18N
+                }
                 response.getOutputStream().close();
-            } catch (Exception ex) {
+            } catch (IOException ex) {
             }
         } else {
             try {
-                PrintStream ps = new PrintStream(response.getOutputStream());
-                t.printStackTrace(ps);
-                ps.close();
+                try (PrintStream ps = new PrintStream(response.getOutputStream())) {
+                    t.printStackTrace(ps);
+                }
                 response.getOutputStream().close();
-            } catch (Exception ex) {
+            } catch (IOException ex) {
             }
         }
     }
@@ -171,7 +152,7 @@ public class LoginData implements Filter {
             pw.close();
             sw.close();
             stackTrace = sw.getBuffer().toString();
-        } catch (Exception ex) {
+        } catch (IOException ex) {
         }
         return stackTrace;
     }

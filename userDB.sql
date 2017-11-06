@@ -26,6 +26,8 @@ CREATE TABLE `account` (
   `username` varchar(12) NOT NULL DEFAULT '',
   `password` varchar(12) NOT NULL,
   `email` varchar(20) DEFAULT NULL,
+  `Descr` text,
+  `Rank` char(7) DEFAULT 'Member',
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -36,7 +38,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES ('Alex','weee2wee+',NULL),('foo','bb@22','');
+INSERT INTO `account` VALUES ('Alex','bb@22',NULL,NULL,'Member'),('bb','bb@21',NULL,'Hello world!','Member'),('bbb','bb@21',NULL,NULL,'Member'),('foo','bb@22','','Hello, my name is billy bob.','Senior');
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-10-08 22:57:11
+-- Dump completed on 2017-11-05 21:10:54

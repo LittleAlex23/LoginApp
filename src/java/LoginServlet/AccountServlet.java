@@ -9,7 +9,6 @@ import DAO.UserManager;
 import Entity.UserAccount;
 import Entity.Validation;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Enumeration;
 import java.util.HashMap;
 import javax.ejb.EJB;
@@ -32,31 +31,7 @@ public class AccountServlet extends HttpServlet {
     
     @EJB
     Validation validation;
-    @Override
-    public void init(){
-    } 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-    }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -66,15 +41,6 @@ public class AccountServlet extends HttpServlet {
             session.invalidate();
         response.sendRedirect("/WebApp/start");
     }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -85,15 +51,9 @@ public class AccountServlet extends HttpServlet {
         
         // Attempt to log in
         if(request.getParameter("login") != null){
-            user = manager.checkUserExists(name);
-            // Log in invalid
-            if(user == null || !user.getPassword().equals(pass)){
-                request.setAttribute("invalid", "Either username or password does not match");
-                request.getRequestDispatcher("start").forward(request, response);
-            }
-          
-            // Log-in success
-            else{
+            user = manager.getUser(name, pass);
+            // Log-in is successful
+            if(user != null){
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
                 
@@ -102,14 +62,18 @@ public class AccountServlet extends HttpServlet {
                 session.setAttribute("currentVisitorCount", (Integer)ctx.getAttribute("currentVisitorCount"));
                 
                 response.sendRedirect("LoginSuccess.jsp");
-            }    
+            }   
+            // Log-in is invalid
+            else{
+                request.setAttribute("invalid", "Either username or password does not match");
+                request.getRequestDispatcher("start").forward(request, response);
+            }
         }
         
         // Create a new account
         else if (request.getParameter("new_account") != null) {
-            user = manager.checkUserExists(name);
             // Account does not exist so create a new one
-            if(user == null){
+            if(manager.checkUserExists(name) == null){
                 if(!validation.isPassValid(pass))
                     request.setAttribute("invalidPassword", "invalid password");
                 else{
@@ -128,7 +92,6 @@ public class AccountServlet extends HttpServlet {
             HttpSession session = request.getSession();
             user = (UserAccount)session.getAttribute("user");
             manager.deleteUser(user);
-            session.invalidate();
             response.sendRedirect("TerminationConfirmed.html");
         }
         
@@ -170,15 +133,9 @@ public class AccountServlet extends HttpServlet {
             response.sendRedirect("LoginSuccess.jsp");
         }
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "This servlet handle request regarding a user account";
-    }// </editor-fold>
+    }
     
 }
