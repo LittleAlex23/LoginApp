@@ -1,17 +1,38 @@
 package Entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Set;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @NamedQuery(name="checkAccount", query="from UserAccount u where u.username = :username")
 @Table(name="account")
 public class UserAccount implements Serializable {
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private int ID;
+    
+    @ElementCollection
+    @OneToMany
+    @JoinTable(name="userID")
+    private Collection<Note> listOfNotes = new ArrayList<>();
+    
+    @Column
     private String username;
     @Column
     private String password;
@@ -21,6 +42,28 @@ public class UserAccount implements Serializable {
     private String description;
     @Column
     private String rank;
+    
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name ="lastLogged")
+    private Date date;
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public Collection<Note> getListOfNotes() {
+        return listOfNotes;
+    }
+
+    public void setListOfNotes(Set<Note> listOfNotes) {
+        this.listOfNotes = listOfNotes;
+    }
+    
     public String getUsername() {
         return username;
     }
@@ -73,6 +116,15 @@ public class UserAccount implements Serializable {
     public void setRank(String rank) {
         this.rank = rank;
     }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+    
     @Override
     public String toString(){
         return "Username: "+ username + 

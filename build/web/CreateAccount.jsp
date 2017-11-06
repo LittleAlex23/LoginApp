@@ -15,11 +15,13 @@
             <fieldset>
                 <%
                     String name = (String)request.getAttribute("accountExisted");
-                    if(name != null){
+                    String longName = (String)request.getAttribute("nameTooLong");
+                    if(name != null)
                         out.println(name);
+                    else if(longName != null)
+                        out.println(longName);
                  %>
                 <br>
-                <%}%>
                 must be at most 12 characters
                 <br>
                 username: <input type="text" name="username" maxlength="12"> 
@@ -38,7 +40,7 @@
                 password: <input type="password" name="pass" maxlength="12">
                 <br>
                 <br>
-                <input type="submit" name ="new_account" value="create account">
+                <input type="submit" name ="execute" value="create account">
                 <br>
             </fieldset>
         </form>

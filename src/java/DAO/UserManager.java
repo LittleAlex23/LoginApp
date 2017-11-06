@@ -29,17 +29,17 @@ public class UserManager {
         UserAccount user = new UserAccount(name,pass);
         session.beginTransaction();
         session.save(user);
-        commitUser(user);
+        commitUser();
     }
     public void deleteUser(UserAccount user){
         session.beginTransaction();
         session.delete(user);
-        commitUser(user);
+        commitUser();
     }
     public void update(UserAccount user){
         session.beginTransaction();
         session.update(user);
-        commitUser(user);
+        commitUser();
     }
     @PreDestroy
     public void release(){
@@ -47,7 +47,7 @@ public class UserManager {
             session.close();
         StandardServiceRegistryBuilder.destroy(session.getSessionFactory().getSessionFactoryOptions().getServiceRegistry());
     }
-    private void commitUser(UserAccount user){
+    private void commitUser(){
         session.getTransaction().commit();
         session.flush();
     }

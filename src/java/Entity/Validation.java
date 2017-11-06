@@ -42,7 +42,7 @@ public class Validation {
         return 48 <= s && s <= 57;
     }
     public boolean isUsernameValid(String username){
-        return true;
+        return username.length() >= 3 && username.length() <= 12;
     }
     public boolean isEmailValid(String email){
         return true;

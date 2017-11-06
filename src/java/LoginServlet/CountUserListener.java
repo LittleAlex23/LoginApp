@@ -4,11 +4,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
-/**
- * Web application lifecycle listener.
- *
- * @author Alexandre
- */
+
 public class CountUserListener implements HttpSessionListener {
     ServletContext ctx = null;
     static int currentVisitorCount = 0, overAllUserCount = 0;

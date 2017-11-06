@@ -32,6 +32,8 @@
         <div id="main">
             <h1>Welcome, <%= user.getName()%></h1>
             You are visitor #<%= session.getAttribute("overAllUserCount")%>!
+            <br>
+            last logged on: <%= session.getAttribute("lastLogged")%>
             <div id = "profile">
                 <table>
                     <tr>
@@ -54,6 +56,16 @@
                         </td>
                     </tr>
                 </table>
+            </div>
+        </div>
+                            
+        <div id="note">
+            <div>
+                <form>
+                    <legend align="left">Note</legend>
+                    <textarea rows="10" cols="50" id="edit" maxlength="65535" disabled="true">Hello world </textarea>
+                    <label onclick="editDescr(this)">edit</label>
+                </form>
             </div>
         </div>
     </body>

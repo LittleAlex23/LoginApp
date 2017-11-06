@@ -29,7 +29,7 @@
                         </tr>
                         <tr>
                             <td></td> 
-                            <td align="right"><input type="submit" name="login" value="log in"></td> 
+                            <td align="right"><input type="submit" name="execute" value="log in"></td> 
                         </tr>
                         <tr>
                             <td></td> 

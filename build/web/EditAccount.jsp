@@ -16,7 +16,8 @@
         <div class="error_Input">
         <%
             if(session.getAttribute("user") == null){
-                response.sendRedirect("/TestLogin/start");
+                response.sendRedirect("/TestLogin/loginPage"
+                        + "");
                 return;
             }
             HashMap<Integer,String> messageList = (HashMap<Integer,String>)request.getAttribute("errorMessage");
@@ -49,7 +50,7 @@
                         <td><input type="text" name="new_email"></td>
                     </tr>
                     <tr>
-                        <td></td><td align ="right"><input type="submit" name="edit_account" value="save"></td>
+                        <td></td><td align ="right"><input type="submit" name="execute" value="save"></td>
                     </tr>
                 </table>
             </fieldset>

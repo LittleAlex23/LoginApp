@@ -36,26 +36,12 @@ public class LoginData implements Filter {
         "/css/.+.css$",
         "/CreateAccount.jsp",
         "/AccountServlet$",
-        "/start",
+        "/loginPage",
         "/webapi/account"
     };
     public LoginData() {
     }    
     
-    private void doBeforeProcessing(ServletRequest request, ServletResponse response)
-            throws IOException, ServletException {
-        if (DEBUG) {
-            log("LoginData:DoBeforeProcessing");
-        }
-    }    
-    
-    private void doAfterProcessing(ServletRequest request, ServletResponse response)
-            throws IOException, ServletException {
-        if (DEBUG) {
-            log("LoginData:DoAfterProcessing");
-        }
-    }
-
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
@@ -63,11 +49,11 @@ public class LoginData implements Filter {
         HttpServletRequest httpReq = (HttpServletRequest) request;
         HttpServletResponse httpRes = (HttpServletResponse) response;
         HttpSession session = httpReq.getSession();
-        ServletContext context = config.getServletContext();
+       // ServletContext context = config.getServletContext();
         UserAccount c = (UserAccount)session.getAttribute("user");
         boolean loggedIn = c != null;
         boolean isLoggingIn = httpReq.getRequestURI().matches(httpReq.getContextPath() + "/LoginSuccess.jsp$");
-        System.out.println(httpReq.getRequestURI());
+        
         if (loggedIn || isExcluded(httpReq.getRequestURI(), httpReq.getContextPath()) || (isLoggingIn && loggedIn)){
           //  context.log(c.getName() + " logged on " + (new java.util.Date()));
             httpRes.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
@@ -75,7 +61,7 @@ public class LoginData implements Filter {
             httpRes.setDateHeader("Expires", 0);
             chain.doFilter(request, response);
         } else {
-            httpRes.sendRedirect("/WebApp/start");
+            httpRes.sendRedirect("/WebApp/loginPage");
         }
     }
     private boolean isExcluded(String URI, String path){
@@ -113,35 +99,7 @@ public class LoginData implements Filter {
         sb.append(")");
         return (sb.toString());
     }
-    
-    private void sendProcessingError(Throwable t, ServletResponse response) {
-        String stackTrace = getStackTrace(t);        
-        
-        if (stackTrace != null && !stackTrace.equals("")) {
-            try {
-                response.setContentType("text/html");
-                try (PrintStream ps = new PrintStream(response.getOutputStream()); 
-                        PrintWriter pw = new PrintWriter(ps)) {
-                    pw.print("<html>\n<head>\n<title>Error</title>\n</head>\n<body>\n"); //NOI18N
-                    
-                    // PENDING! Localize this for next official release
-                    pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");
-                    pw.print(stackTrace);
-                    pw.print("</pre></body>\n</html>"); //NOI18N
-                }
-                response.getOutputStream().close();
-            } catch (IOException ex) {
-            }
-        } else {
-            try {
-                try (PrintStream ps = new PrintStream(response.getOutputStream())) {
-                    t.printStackTrace(ps);
-                }
-                response.getOutputStream().close();
-            } catch (IOException ex) {
-            }
-        }
-    }
+  
     
     public static String getStackTrace(Throwable t) {
         String stackTrace = null;
@@ -160,5 +118,4 @@ public class LoginData implements Filter {
     public void log(String msg) {
         filterConfig.getServletContext().log(msg);        
     }
-    
 }
