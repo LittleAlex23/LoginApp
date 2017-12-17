@@ -27,13 +27,14 @@ public class CreateAccount extends ManageAccount{
                 manager.createNewUser(name, pass);
                 response.sendRedirect("/WebApp/loginPage");
             }
-            
-            // either the username or the password is invalid
-            if(!isUserNameValid)
-                request.setAttribute("nameTooLong", "the length must be between 3 and 12 inclusive");
-            if(!isPasswordValid)
-                request.setAttribute("invalidPassword", "invalid password");
-           request.getRequestDispatcher("CreateAccount.jsp").forward(request, response);
+            else{
+                // either the username or the password is invalid
+                if(!isUserNameValid)
+                    request.setAttribute("nameTooLong", "the length must be between 3 and 12 inclusive");
+                if(!isPasswordValid)
+                    request.setAttribute("invalidPassword", "invalid password");
+               request.getRequestDispatcher("CreateAccount.jsp").forward(request, response);
+            }
         }
     }
 }

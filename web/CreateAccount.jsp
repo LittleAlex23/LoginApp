@@ -8,7 +8,7 @@
         <link rel="stylesheet" type="text/css" href="css/globalDecor.css">
     </head>
     <body>
-        <a href="start"> return to start</a>
+        <a href="loginPage"> return to start</a>
         <br>
         <br>
         <form action="AccountServlet" method="POST">

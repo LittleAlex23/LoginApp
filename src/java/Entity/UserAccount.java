@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -11,7 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -29,8 +30,8 @@ public class UserAccount implements Serializable {
     
     @ElementCollection
     @OneToMany
-    @JoinTable(name="userID")
-    private Collection<Note> listOfNotes = new ArrayList<>();
+    @JoinColumn(name="userID")
+    private Collection<Note> note = new ArrayList<>();
     
     @Column
     private String username;
@@ -56,12 +57,12 @@ public class UserAccount implements Serializable {
         this.ID = ID;
     }
 
-    public Collection<Note> getListOfNotes() {
-        return listOfNotes;
+    public Collection<Note> getNote() {
+        return note;
     }
 
-    public void setListOfNotes(Set<Note> listOfNotes) {
-        this.listOfNotes = listOfNotes;
+    public void setNote(Collection<Note> note) {
+        this.note = note;
     }
     
     public String getUsername() {

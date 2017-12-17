@@ -5,9 +5,30 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <link rel="stylesheet" type="text/css" href="css/globalDecor.css">
-        <link rel="stylesheet" type="text/css" href="css/HomePage.css">
-        <script src="js/EditButtonScript.js"></script>
+        <link rel="stylesheet" type="text/css" href="../css/globalDecor.css">
+        <link rel="stylesheet" type="text/css" href="../css/HomePage.css">
+        <script src="http://code.jquery.com/jquery-3.2.1.js"></script>
+        <script>
+            $(document).ready(function(){
+                $('#note1').click(function(){
+                    var comment = $('#note1a').val();
+                    $.ajax({
+                        type:'POST',
+                        data: {c1: comment},
+                        url:'AccountServlet'
+                    });
+                });
+                $('#descrLabel').click(function(){
+                    var descr = $('#descrVal').val();
+                    $.ajax({
+                        type:'POST',
+                        data: {edit_descr: descr},
+                        url:'AccountServlet'
+                    });
+                });
+            });
+        </script>
+       
         <style>
             ul{
                 margin: 0px;
@@ -24,7 +45,7 @@
         <jsp:useBean id = "user" class="Entity.UserAccount" scope="session"> 
         </jsp:useBean>
         <ul>
-            <li><a href = "AccountServlet"> log out </a> </li>
+            <li><a href = "../AccountServlet"> log out </a> </li>
             <li><a href = "DeleteAccount.html"> delete account </a></li>
             <li> <a href = "EditAccount.jsp"> edit account </a></li>
             <li> active visitors: <%= session.getAttribute("currentVisitorCount")%> </li>
@@ -43,15 +64,13 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align ="right">
-                            <a href="EditProfile.jsp">edit profile</a>
-                        </td>
                     </tr>
                     <tr>
                         <td>
                             <form>
                                 <legend align="left">Description:</legend>
-                                <textarea rows="10" cols="50" class="edit" maxlength="65535" readonly><%= user.getDescription()%> </textarea>
+                                <textarea rows="10" cols="50" id="descrVal" maxlength="65535"><%= user.getDescription()%> </textarea>
+                                <label align="right" id='descrLabel' >edit</label>
                             </form>
                         </td>
                     </tr>
@@ -63,8 +82,8 @@
             <div>
                 <form>
                     <legend align="left">Note</legend>
-                    <textarea rows="10" cols="50" id="edit" maxlength="65535" disabled="true">Hello world </textarea>
-                    <label onclick="editDescr(this)">edit</label>
+                    <textarea id='note1a' rows="10" cols="50" maxlength="65535"  >Hello world </textarea>
+                    <label id='note1' >edit</label>
                 </form>
             </div>
         </div>

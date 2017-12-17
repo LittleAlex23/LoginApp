@@ -30,7 +30,7 @@ public class LoginAccount extends ManageAccount{
             manager.update(user);
             session.setAttribute("overAllUserCount", (Integer)context.getAttribute("overAllUserCount"));
             session.setAttribute("currentVisitorCount", (Integer)context.getAttribute("currentVisitorCount"));
-            response.sendRedirect("LoginSuccess.jsp");
+            response.sendRedirect("LoggedIn/LoginSuccess.jsp");
         }   
         // Log-in is invalid
         else{

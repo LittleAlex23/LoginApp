@@ -1,15 +1,19 @@
 package Entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Entity;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@Table
+@Table(name ="Note")
 public class Note implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -20,6 +24,10 @@ public class Note implements Serializable {
     @Column
     private int userID;
 
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name ="datePosted")
+    private Date date;
     public int getID() {
         return ID;
     }
@@ -43,5 +51,12 @@ public class Note implements Serializable {
     public void setUserID(int userID) {
         this.userID = userID;
     }
-    
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Entity;
 
 import java.util.HashMap;
@@ -35,10 +30,10 @@ public class Validation {
         }
         return hasSymbol && hasNumber;
     }
-    public boolean hasSymbol(int s){
+    private boolean hasSymbol(int s){
         return 33 <= s && s <= 47 || 58 <= s && s <= 68 || 91 <= s && s <= 96; 
     }
-    public boolean hasNumber(int s){
+    private boolean hasNumber(int s){
         return 48 <= s && s <= 57;
     }
     public boolean isUsernameValid(String username){

@@ -1,16 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package LoginServlet;
 
 import DAO.UserManager;
 import Entity.ManageAccount.ExecutionFactory;
 import Entity.ManageAccount.ManageAccount;
+import Entity.Note;
 import Entity.UserAccount;
 import Entity.Validation;
 import java.io.IOException;
+import java.util.Date;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -51,17 +48,25 @@ public class AccountServlet extends HttpServlet {
                 account.setContext(getServletContext());
             account.execute(request, response);
         }
-        else if(request.getParameter("edit_text") != null){
+        else if(request.getParameter("edit_descr") != null){
             HttpSession session = request.getSession();
             user = (UserAccount)session.getAttribute("user");
-            user.setDescription(request.getParameter("edit_text"));
+            user.setDescription(request.getParameter("edit_descr"));
             manager.update(user);
-            response.sendRedirect("LoginSuccess.jsp");
+        }
+        else if(request.getParameter("c1") != null){
+            HttpSession session = request.getSession();
+            user = (UserAccount)session.getAttribute("user");
+            Note n = new Note();
+            n.setDescr(request.getParameter("c1"));
+            n.setUserID(user.getID());
+            n.setDate(new Date());
+            user.getNote().add(n);
+            manager.save(user, n);
         }
     }
     @Override
     public String getServletInfo() {
         return "This servlet handle request regarding a user account";
     }
-    
 }
