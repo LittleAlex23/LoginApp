@@ -1,9 +1,11 @@
 package Entity.ManageAccount;
 
 import Entity.UserAccount;
+import Entity.Validation;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.HashMap;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +14,9 @@ import javax.servlet.http.HttpSession;
 
 @Stateless
 public class EditAccount extends ManageAccount{
+    @EJB
+    Validation validation;
+    
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         HttpSession session = request.getSession();

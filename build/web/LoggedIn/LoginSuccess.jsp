@@ -9,24 +9,7 @@
         <link rel="stylesheet" type="text/css" href="../css/HomePage.css">
         <script src="http://code.jquery.com/jquery-3.2.1.js"></script>
         <script>
-            $(document).ready(function(){
-                $('#note1').click(function(){
-                    var comment = $('#note1a').val();
-                    $.ajax({
-                        type:'POST',
-                        data: {c1: comment},
-                        url:'AccountServlet'
-                    });
-                });
-                $('#descrLabel').click(function(){
-                    var descr = $('#descrVal').val();
-                    $.ajax({
-                        type:'POST',
-                        data: {edit_descr: descr},
-                        url:'AccountServlet'
-                    });
-                });
-            });
+            
         </script>
        
         <style>
@@ -63,28 +46,7 @@
                             <hr>
                         </td>
                     </tr>
-                    <tr>
-                    </tr>
-                    <tr>
-                        <td>
-                            <form>
-                                <legend align="left">Description:</legend>
-                                <textarea rows="10" cols="50" id="descrVal" maxlength="65535"><%= user.getDescription()%> </textarea>
-                                <label align="right" id='descrLabel' >edit</label>
-                            </form>
-                        </td>
-                    </tr>
                 </table>
-            </div>
-        </div>
-                            
-        <div id="note">
-            <div>
-                <form>
-                    <legend align="left">Note</legend>
-                    <textarea id='note1a' rows="10" cols="50" maxlength="65535"  >Hello world </textarea>
-                    <label id='note1' >edit</label>
-                </form>
             </div>
         </div>
     </body>

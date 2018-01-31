@@ -4,7 +4,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Log-in Page</title>
         <link rel="stylesheet" type="text/css" href='<c:url value="/css/InlineTag.css" />'>
         <link rel="stylesheet" type="text/css" href='<c:url value="/css/globalDecor.css" />' />
     </head>
@@ -29,7 +29,7 @@
                         </tr>
                         <tr>
                             <td></td> 
-                            <td align="right"><input type="submit" name="execute" value="log in"></td> 
+                            <td align="right"><input type="submit" name="execute" value="log_in"></td> 
                         </tr>
                         <tr>
                             <td></td> 

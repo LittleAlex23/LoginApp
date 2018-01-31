@@ -28,11 +28,6 @@ public class UserAccount implements Serializable {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int ID;
     
-    @ElementCollection
-    @OneToMany
-    @JoinColumn(name="userID")
-    private Collection<Note> note = new ArrayList<>();
-    
     @Column
     private String username;
     @Column
@@ -55,14 +50,6 @@ public class UserAccount implements Serializable {
 
     public void setID(int ID) {
         this.ID = ID;
-    }
-
-    public Collection<Note> getNote() {
-        return note;
-    }
-
-    public void setNote(Collection<Note> note) {
-        this.note = note;
     }
     
     public String getUsername() {

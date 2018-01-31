@@ -1,6 +1,8 @@
 package Entity.ManageAccount;
 
+import Entity.Validation;
 import java.io.IOException;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 
 @Stateless
 public class CreateAccount extends ManageAccount{
+    @EJB
+    Validation validation;
+    
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         String name = request.getParameter("username");

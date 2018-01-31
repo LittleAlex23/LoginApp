@@ -1,10 +1,9 @@
 package Entity.ManageAccount;
+import java.util.HashMap;
 import javax.ejb.EJB;
-import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 @Stateless
-@LocalBean
 public class ExecutionFactory {
     @EJB
     CreateAccount create;
@@ -14,19 +13,17 @@ public class ExecutionFactory {
     LoginAccount login;
     @EJB
     EditAccount edit;
+    private static HashMap<String, ManageAccount> command;
+    public ExecutionFactory(){
+    }
     public ManageAccount getAccountCommand(String action){
-        switch (action) {
-            case "create account":
-                return create;
-            case "confirm":
-                return delete;
-            case "log in":
-                return login;
-            case "save":
-                return edit;
-            default:
-                break;
+        if(command == null){
+            command = new HashMap<>();
+            command.put("create account", create);
+            command.put("confirm", delete);
+            command.put("log_in", login);
+            command.put("save", edit);
         }
-        return null;
+        return command.get(action);
     }
 }

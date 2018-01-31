@@ -17,18 +17,17 @@ public class Validation {
         return message;
     }
     public boolean isPassValid(String pass){
-        boolean hasSymbol = false;
-        boolean hasNumber = false;
+        boolean isValid = true;
         if(pass.length() <= 3)
             return false;
         for(int i = 0; i < pass.length(); i++){
             char c = pass.charAt(i);
-            if(!hasSymbol && hasSymbol(c))
-                hasSymbol = true;
-            if(!hasNumber && hasNumber(c))
-                hasNumber = true;
+            if(hasSymbol(c) && hasNumber(c)){
+                isValid = true;
+                break;
+            }
         }
-        return hasSymbol && hasNumber;
+        return isValid;
     }
     private boolean hasSymbol(int s){
         return 33 <= s && s <= 47 || 58 <= s && s <= 68 || 91 <= s && s <= 96; 

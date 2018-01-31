@@ -15,6 +15,7 @@ public class DeleteAccount extends ManageAccount {
         HttpSession session = request.getSession();
         UserAccount user = (UserAccount)session.getAttribute("user");
         manager.deleteUser(user);
+        session.invalidate();
         response.sendRedirect("TerminationConfirmed.html");
     }
 }

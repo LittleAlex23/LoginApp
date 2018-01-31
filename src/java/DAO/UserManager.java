@@ -1,6 +1,5 @@
 package DAO;
 
-import Entity.Note;
 import Entity.UserAccount;
 import javax.annotation.PreDestroy;
 import javax.ejb.Stateless;
@@ -42,12 +41,7 @@ public class UserManager {
         session.update(user);
         commitUser();
     }
-    public void save(UserAccount user, Note n){
-        session.beginTransaction();
-        session.update(user);
-        session.save(n);
-        commitUser();
-    }
+    
     @PreDestroy
     public void release(){
         if (session.isOpen())

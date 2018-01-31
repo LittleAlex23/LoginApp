@@ -22,9 +22,6 @@ public class MyWebService extends Application{
     @Produces(MediaType.TEXT_PLAIN)
     public String testMethod1(@PathParam("name") String name){
         UserAccount user = manager.checkUserExists(name);
-        if(user == null)
-            return "Account does not exist";
-        else
-            return user.toString();
+        return user == null ? "Account does not exist": user.toString();
     }
 }
