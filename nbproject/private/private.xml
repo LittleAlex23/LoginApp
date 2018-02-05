@@ -4,14 +4,33 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Alexandre/Documents/NetBeansProjects/WebApp/src/java/Entity/UserAccount.java</file>
-            <file>file:/C:/Users/Alexandre/Documents/NetBeansProjects/WebApp/web/WEB-INF/login.jsp</file>
-            <file>file:/C:/Users/Alexandre/Documents/NetBeansProjects/WebApp/src/java/Entity/ManageAccount/LoginAccount.java</file>
-            <file>file:/C:/Users/Alexandre/Documents/NetBeansProjects/WebApp/src/java/Entity/ManageAccount/ExecutionFactory.java</file>
-            <file>file:/C:/Users/Alexandre/Documents/NetBeansProjects/WebApp/src/java/Entity/ManageAccount/CreateAccount.java</file>
+            <file>file:/C:/Users/Alexandre/Documents/NetBeansProjects/WebApp/web/LoggedIn/EditAccount.jsp</file>
+            <file>file:/C:/Users/Alexandre/Documents/NetBeansProjects/WebApp/src/java/hibernate.cfg.xml</file>
+            <file>file:/C:/Users/Alexandre/Documents/NetBeansProjects/WebApp/src/java/Entity/Game.java</file>
+            <file>file:/C:/Users/Alexandre/Documents/NetBeansProjects/WebApp/web/OrderForm.jsp</file>
+            <file>file:/C:/Users/Alexandre/Documents/NetBeansProjects/WebApp/src/java/Entity/ManageAccount/EditAccount.java</file>
+            <file>file:/C:/Users/Alexandre/Documents/NetBeansProjects/WebApp/web/CreateAccount.jsp</file>
             <file>file:/C:/Users/Alexandre/Documents/NetBeansProjects/WebApp/web/index.html</file>
             <file>file:/C:/Users/Alexandre/Documents/NetBeansProjects/WebApp/src/java/Entity/ManageAccount/ManageAccount.java</file>
             <file>file:/C:/Users/Alexandre/Documents/NetBeansProjects/WebApp/src/java/Authentication/LoginData.java</file>
             <file>file:/C:/Users/Alexandre/Documents/NetBeansProjects/WebApp/src/java/LoginServlet/AccountServlet.java</file>
+            <file>file:/C:/Users/Alexandre/Documents/NetBeansProjects/WebApp/src/java/DAO/UserManager.java</file>
+            <file>file:/C:/Users/Alexandre/Documents/NetBeansProjects/WebApp/web/WEB-INF/login.jsp</file>
+            <file>file:/C:/Users/Alexandre/Documents/NetBeansProjects/WebApp/web/LoggedIn/Shopping.jsp</file>
+            <file>file:/C:/Users/Alexandre/Documents/NetBeansProjects/WebApp/web/NotFound.html</file>
+            <file>file:/C:/Users/Alexandre/Documents/NetBeansProjects/WebApp/src/java/LoginServlet/OrderServlet.java</file>
+            <file>file:/C:/Users/Alexandre/Documents/NetBeansProjects/WebApp/src/java/Listener/CountUserListener.java</file>
+            <file>file:/C:/Users/Alexandre/Documents/NetBeansProjects/WebApp/web/webAPIDoc.html</file>
+            <file>file:/C:/Users/Alexandre/Documents/NetBeansProjects/WebApp/src/java/Entity/ManageAccount/ExecutionFactory.java</file>
+            <file>file:/C:/Users/Alexandre/Documents/NetBeansProjects/WebApp/web/LoggedIn/DeleteAccount.html</file>
+            <file>file:/C:/Users/Alexandre/Documents/NetBeansProjects/WebApp/web/LoggedIn/TerminationConfirmed.html</file>
+            <file>file:/C:/Users/Alexandre/Documents/NetBeansProjects/WebApp/src/java/LoginServlet/Start.java</file>
+            <file>file:/C:/Users/Alexandre/Documents/NetBeansProjects/WebApp/src/java/Listener/MyAppServletContextListener.java</file>
+            <file>file:/C:/Users/Alexandre/Documents/NetBeansProjects/WebApp/web/error.jsp</file>
+            <file>file:/C:/Users/Alexandre/Documents/NetBeansProjects/WebApp/src/java/Entity/ManageAccount/LoginAccount.java</file>
+            <file>file:/C:/Users/Alexandre/Documents/NetBeansProjects/WebApp/src/java/Entity/ManageAccount/DeleteAccount.java</file>
+            <file>file:/C:/Users/Alexandre/Documents/NetBeansProjects/WebApp/src/java/Entity/ManageAccount/CreateAccount.java</file>
+            <file>file:/C:/Users/Alexandre/Documents/NetBeansProjects/WebApp/web/LoggedIn/LoginSuccess.jsp</file>
         </group>
     </open-files>
 </project-private>

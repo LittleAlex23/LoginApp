@@ -1,10 +1,7 @@
 package LoginServlet;
 
-import DAO.UserManager;
 import Entity.ManageAccount.ExecutionFactory;
 import Entity.ManageAccount.ManageAccount;
-import Entity.UserAccount;
-import Entity.Validation;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;

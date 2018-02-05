@@ -9,6 +9,7 @@
         <link rel="stylesheet" type="text/css" href='<c:url value="/css/globalDecor.css" />' />
     </head>
     <body> 
+        <a href="index.html"> main page </a>
         <div class="error_Input" align="center">
         <%
             if(request.getAttribute("invalid") != null)

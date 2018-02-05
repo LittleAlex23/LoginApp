@@ -16,13 +16,6 @@ public class MyAppServletContextListener implements ServletContextListener {
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        Driver driver;
-        try {
-            driver = (Driver) DriverManager.getDriver("jdbc:mysql://localhost:3306/userDB?zeroDateTimeBehavior=convertToNull");
-            DriverManager.deregisterDriver(driver);
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
         System.out.println("WebApp is destroyed");
     }
 }
